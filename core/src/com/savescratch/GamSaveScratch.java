@@ -10,6 +10,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+//Sources:		Preferences: https://github.com/libgdx/libgdx/wiki/Preferences
+//							http://stackoverflow.com/questions/18607689/how-to-save-game-state-preferences-in-android-using-libgdx
+
 public class GamSaveScratch extends ApplicationAdapter {
 	private static final int    nCols = 4;
 	private static final int    nRows = 4;
