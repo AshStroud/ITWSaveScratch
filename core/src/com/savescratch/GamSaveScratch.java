@@ -5,10 +5,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.MathUtils;
 
 //Sources:		Preferences: https://github.com/libgdx/libgdx/wiki/Preferences
 //							http://stackoverflow.com/questions/18607689/how-to-save-game-state-preferences-in-android-using-libgdx
@@ -29,7 +34,9 @@ public class GamSaveScratch extends ApplicationAdapter {
 	float fTime=0f;
 	Animation aniMain;
 
-	//Preferences prefYCoord = Gdx.app.getPreferences("Y-Coordinate");
+	TiledMap tmGameMap1;
+	OrthogonalTiledMapRenderer orthotmrRenderer;
+	OrthographicCamera ocMainCam;
 
 	@Override
 	public void create () {
@@ -48,7 +55,11 @@ public class GamSaveScratch extends ApplicationAdapter {
 				trFrames[index++] = tmp[i][j];
 			}
 		}
+		ocMainCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		ocMainCam.update();
 		aniMain= new Animation(1f,trFrames);
+		tmGameMap1= new TmxMapLoader().load("GameMap1.tmx");
+		orthotmrRenderer = new OrthogonalTiledMapRenderer(tmGameMap1);
 	}
 
 	@Override
@@ -88,9 +99,18 @@ public class GamSaveScratch extends ApplicationAdapter {
 			prefCoords.putFloat("Last X-Coord", 0);
 			prefCoords.putFloat("Last Y-Coord", 0);
 		}
+		ocMainCam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		sbMain.setProjectionMatrix(ocMainCam.combined);
+		ocMainCam.position.x = MathUtils.clamp(ocMainCam.position.x, 0, Gdx.graphics.getWidth());
+		ocMainCam.position.y = MathUtils.clamp(ocMainCam.position.y, 0, Gdx.graphics.getHeight());
+		ocMainCam.update();
+
+		orthotmrRenderer.setView(ocMainCam);
+		orthotmrRenderer.render();
+		ocMainCam.update();
 
 		sbMain.begin();
-		sbMain.draw(txBackground,0,0);
+		//sbMain.draw(txBackground,0,0);
 		sbMain.draw(trCurrentFrame,(int)fSpriteX, (int)fSpriteY);
 		sbMain.end();
 		prefCoords.flush();
