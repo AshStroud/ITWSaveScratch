@@ -56,6 +56,7 @@ public class GamSaveScratch extends ApplicationAdapter {
 			}
 		}
 		ocMainCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		ocMainCam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		ocMainCam.update();
 		aniMain= new Animation(1f,trFrames);
 		tmGameMap1= new TmxMapLoader().load("GameMap1.tmx");
@@ -99,7 +100,7 @@ public class GamSaveScratch extends ApplicationAdapter {
 			prefCoords.putFloat("Last X-Coord", 0);
 			prefCoords.putFloat("Last Y-Coord", 0);
 		}
-		ocMainCam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		ocMainCam.position.set(fSpriteX, fSpriteY, 0);
 		sbMain.setProjectionMatrix(ocMainCam.combined);
 		ocMainCam.position.x = MathUtils.clamp(ocMainCam.position.x, 0, Gdx.graphics.getWidth());
 		ocMainCam.position.y = MathUtils.clamp(ocMainCam.position.y, 0, Gdx.graphics.getHeight());
