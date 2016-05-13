@@ -28,8 +28,8 @@ public class GamSaveScratch extends ApplicationAdapter {
 	Texture txBackground;
 	TextureRegion[] trFrames;
 	TextureRegion trCurrentFrame;
-	float fSpriteX;
-	float fSpriteY=0;
+	float fSpriteX = 350;
+	float fSpriteY=  250;
 	float fSpriteSpeed=45f;
 	float fTime=0f;
 	Animation aniMain;
@@ -57,7 +57,7 @@ public class GamSaveScratch extends ApplicationAdapter {
 		}
 		ocMainCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		ocMainCam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		ocMainCam.update();
+		//ocMainCam.update();
 		aniMain= new Animation(1f,trFrames);
 		tmGameMap1= new TmxMapLoader().load("GameMap1.tmx");
 		orthotmrRenderer = new OrthogonalTiledMapRenderer(tmGameMap1);
@@ -97,8 +97,9 @@ public class GamSaveScratch extends ApplicationAdapter {
 		}
 
 		if(Gdx.input.isKeyPressed(Input.Keys.BACKSPACE)){
-			prefCoords.putFloat("Last X-Coord", 0);
-			prefCoords.putFloat("Last Y-Coord", 0);
+			prefCoords.putFloat("Last X-Coord", 350);
+			prefCoords.putFloat("Last Y-Coord", 250);
+			System.out.println("Saved Coordinates Reset");
 		}
 		ocMainCam.position.set(fSpriteX, fSpriteY, 0);
 		sbMain.setProjectionMatrix(ocMainCam.combined);
