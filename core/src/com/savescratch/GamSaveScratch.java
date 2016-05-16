@@ -30,12 +30,14 @@ public class GamSaveScratch extends ApplicationAdapter {
 	TextureRegion trCurrentFrame;
 	float fSpriteX = 350;
 	float fSpriteY=  250;
-	float fSpriteSpeed=45f;
+	float fSpriteSpeed=100f;
 	float fTime=0f;
 	Animation aniMain;
 
 	TiledMap tmGameMap1;
-	OrthogonalTiledMapRenderer orthotmrRenderer;
+	TiledMap tmGameMap2;
+	OrthogonalTiledMapRenderer orthotmrRendererMap2;
+	OrthogonalTiledMapRenderer orthotmrRendererMap1;
 	OrthographicCamera ocMainCam;
 
 	@Override
@@ -60,7 +62,9 @@ public class GamSaveScratch extends ApplicationAdapter {
 		//ocMainCam.update();
 		aniMain= new Animation(1f,trFrames);
 		tmGameMap1= new TmxMapLoader().load("GameMap1.tmx");
-		orthotmrRenderer = new OrthogonalTiledMapRenderer(tmGameMap1);
+		orthotmrRendererMap1 = new OrthogonalTiledMapRenderer(tmGameMap1);
+		tmGameMap2 = new TmxMapLoader().load("GameMap2.tmx");
+		orthotmrRendererMap2 = new OrthogonalTiledMapRenderer(tmGameMap2);
 	}
 
 	@Override
@@ -107,8 +111,8 @@ public class GamSaveScratch extends ApplicationAdapter {
 		ocMainCam.position.y = MathUtils.clamp(ocMainCam.position.y, 0, Gdx.graphics.getHeight());
 		ocMainCam.update();
 
-		orthotmrRenderer.setView(ocMainCam);
-		orthotmrRenderer.render();
+		orthotmrRendererMap1.setView(ocMainCam);
+		orthotmrRendererMap1.render();
 		ocMainCam.update();
 
 		sbMain.begin();
